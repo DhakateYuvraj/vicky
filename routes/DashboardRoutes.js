@@ -26,9 +26,27 @@ import { v4 as uuid } from 'uuid';
 export const DashboardMenu = [
 	{
 		id: uuid(),
-		title: 'Dashboard',
+		title: 'Home',
 		icon: 'home',
 		link: '/'
+	},
+	{
+		id: uuid(),
+		title: 'Tire Inventory',
+		icon: 'home',
+		link: '/tire_inventory'
+	},
+	{
+		id: uuid(),
+		title: 'Vehicle Management',
+		icon: 'home',
+		link: '/vehicle_management'
+	},
+	{
+		id: uuid(),
+		title: 'Dashboard',
+		icon: 'home',
+		link: '/dashboard'
 	},
 	{
 		id: uuid(),
@@ -131,29 +149,6 @@ export const DashboardMenu = [
 				]
 			}
 		]
-	},	
-	{
-		id: uuid(),
-		title: 'Documentation',
-		grouptitle: true
-	},
-	{
-		id: uuid(),
-		title: 'Docs',
-		icon: 'clipboard',
-		link: '/documentation'
-	},
-	{
-		id: uuid(),
-		title: 'Changelog',
-		icon: 'git-pull-request',
-		link: '/changelog'
-	},
-	{
-		id: uuid(),
-		title: 'Download',
-		icon: 'download',
-		link: 'https://codescandy.gumroad.com/l/dashui-nextjs'
 	}
 ];
 

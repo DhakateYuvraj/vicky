@@ -1,4 +1,21 @@
-// 
-// user.scss
-// Use this to write your custom SCSS
-//
+.dashui-table {
+  thead th {
+    background-color: #f1f5f9;
+    color: #475569;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  tbody tr.selected-row {
+    background-color: rgba($primary, 0.08);
+  }
+
+  tbody tr:hover {
+    background-color: #f8fafc;
+  }
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
