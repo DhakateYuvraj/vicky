@@ -33,6 +33,7 @@
     "bootstrap": "^5.3.8",
     "eslint": "9.39.1",
     "eslint-config-next": "16.0.8",
+    "formik": "^2.4.9",
     "next": "16.0.8",
     "node-sass": "^9.0.0",
     "prism-react-renderer": "^2.4.1",
@@ -49,6 +50,7 @@
     "sass-loader": "^16.0.6",
     "simplebar": "^6.3.3",
     "simplebar-react": "^3.3.2",
-    "uuid": "^13.0.0"
+    "uuid": "^13.0.0",
+    "yup": "^1.7.1"
   }
 }

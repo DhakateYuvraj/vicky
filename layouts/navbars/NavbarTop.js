@@ -24,7 +24,7 @@ const NavbarTop = ({ data }) => {
                 <Menu size={24} /> {/* Increased size */}
               </Link>
 
-              <h4 className="mb-0 fw-bold">{header || 'Dashboard'}</h4> {/* Increased font size and bold */}
+              <h4 className="mb-0 fw-bold">{header}</h4> {/* Increased font size and bold */}
             </div>
 
           </div>
@@ -43,13 +43,12 @@ const NavbarTop = ({ data }) => {
             {/* Breadcrumb below title 
             <div className="text-muted small mt-1">
               {breadcrumb && breadcrumb.length > 0
-                ? breadcrumb.map((crumb, idx) => (
+                && breadcrumb.map((crumb, idx) => (
                     <span key={idx}>
                       {crumb}
                       {idx < breadcrumb.length - 1 && ' / '}
                     </span>
                   ))
-                : <span>Dashboard</span>
               }
             </div>
             */}
