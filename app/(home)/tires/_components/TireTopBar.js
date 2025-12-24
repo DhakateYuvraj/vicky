@@ -27,7 +27,7 @@ export default function TireTopBar({
 
       <Col className="text-md-end">
         <a
-          href="/tire_inventory/new"
+          href="/tires/new"
           className={`btn btn-primary btn-${buttonSize}`}
         >
           + Add Tire

@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from 'react';
+import { useHeaderBreadcrumb } from 'hooks/useHeaderBreadcrumb';
 import { Row, Col } from "react-bootstrap";
 import MetricCard from "./_components/MetricCard";
 import StatusDonut from "./_charts/StatusDonut";
@@ -91,6 +93,18 @@ const AdditionalCharts = () => (
 );
 
 export default function DashboardClient({ data }) {
+  const { setHeader, setBreadcrumb } = useHeaderBreadcrumb();
+    useEffect(() => {
+      setHeader('Dashboard');
+      setBreadcrumb(['Home', 'Dashboard']);
+      
+      // Optional: Clean up when leaving page
+      return () => {
+        setHeader('');
+        setBreadcrumb([]);
+      };
+    }, [setHeader, setBreadcrumb]);
+
   return (
     <div className="w-100">
       <SummaryCards summary={data.summary} />

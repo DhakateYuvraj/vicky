@@ -10,8 +10,8 @@ export default function VehicleInventoryPage() {
   const { setHeader, setBreadcrumb } = useHeaderBreadcrumb();
 
   useEffect(() => {
-    setHeader('Vehicle Inventory');
-    setBreadcrumb(['Home', 'Vehicle Inventory']);
+    setHeader('Vehicles');
+    setBreadcrumb(['Home', 'Vehicles']);
     
     // Optional: Clean up when leaving page
     return () => {

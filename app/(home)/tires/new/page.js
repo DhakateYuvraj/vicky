@@ -15,7 +15,7 @@ import AdditionalDetailsSection from "./_components/AdditionalDetailsSection";
 import { useHeaderBreadcrumb } from "hooks/useHeaderBreadcrumb";
 
 export default function AddNewTirePage() {
-    const router = useRouter();
+  const router = useRouter();
   const { setHeader, setBreadcrumb } = useHeaderBreadcrumb();
   const [alert, setAlert] = useState(null);
 
@@ -100,13 +100,13 @@ export default function AddNewTirePage() {
 
                 {/* RIGHT */}
                 <div className="d-flex gap-2">
-<Button
-  variant="secondary"
-  type="button"
-  onClick={() => router.push("/tire_inventory")}
->
-  Cancel
-</Button>
+                  <Button
+                    variant="secondary"
+                    type="button"
+                    onClick={() => router.push("/tires")}
+                  >
+                    Cancel
+                  </Button>
 
                   <Button type="submit" variant="primary">
                     Save Tire

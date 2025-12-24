@@ -8,11 +8,14 @@ export default function TireTableFooter({
   rowsPerPage,
   onPageChange,
   onRowsPerPageChange,
-  mode
+  mode,
+  entityName = 'tires' // New prop for entity name
 }) {
   if (mode !== 'pagination') return null;
 
   const totalPages = Math.ceil(total / rowsPerPage);
+  const startItem = (page - 1) * rowsPerPage + 1;
+  const endItem = Math.min(page * rowsPerPage, total);
 
   const getPaginationPages = () => {
     const pages = [];
@@ -44,37 +47,46 @@ export default function TireTableFooter({
   };
 
   const pages = getPaginationPages();
-
   const firstPage = 1;
   const lastPage = totalPages;
 
   return (
     <div className="card-footer d-flex justify-content-between align-items-center flex-wrap">
-      {/* LEFT: Rows per page */}
+      {/* LEFT: Showing count and rows per page */}
       <div className="d-flex align-items-center gap-2 mb-2 mb-md-0">
-        <span className="text-muted small">Rows per page:</span>
-        <Form.Select
-          size="sm"
-          style={{ width: 90 }}
-          value={rowsPerPage}
-          onChange={(e) => onRowsPerPageChange(Number(e.target.value))}
-        >
-          {[10, 20, 30, 50].map(v => (
-            <option key={v} value={v}>{v}</option>
-          ))}
-        </Form.Select>
+        
+        <div className="d-flex align-items-center gap-2">
+          <span className="text-muted small">Rows:</span>
+          <Form.Select
+            size="sm"
+            style={{ width: 90 }}
+            value={rowsPerPage}
+            onChange={(e) => onRowsPerPageChange(Number(e.target.value))}
+          >
+            {[10, 20, 30, 50].map(v => (
+              <option key={v} value={v}>{v}</option>
+            ))}
+          </Form.Select>
+        </div>
+
+        <span className="text-muted small">|</span>
+
+                <span className="text-muted small">
+          Showing {startItem} to {endItem} of {total} {entityName}
+        </span>
+        
       </div>
 
       {/* RIGHT: Pagination */}
       <div className="d-flex gap-1 flex-wrap align-items-center">
-
         {/* Prev button */}
         <Button
           size="sm"
+          variant="outline-secondary"
           disabled={page === 1}
           onClick={() => onPageChange(page - 1)}
         >
-          Prev
+          ← Prev
         </Button>
 
         {/* First page */}
@@ -87,7 +99,7 @@ export default function TireTableFooter({
             >
               {firstPage}
             </Button>
-            {pages[0] > 2 && <span className="px-1">...</span>}
+            {pages[0] > 2 && <span className="px-2 text-muted">...</span>}
           </>
         )}
 
@@ -106,7 +118,7 @@ export default function TireTableFooter({
         {/* Last page */}
         {pages[pages.length - 1] < lastPage && (
           <>
-            {pages[pages.length - 1] < lastPage - 1 && <span className="px-1">...</span>}
+            {pages[pages.length - 1] < lastPage - 1 && <span className="px-2 text-muted">...</span>}
             <Button
               size="sm"
               variant={page === lastPage ? 'primary' : 'outline-primary'}
@@ -120,10 +132,11 @@ export default function TireTableFooter({
         {/* Next button */}
         <Button
           size="sm"
+          variant="outline-secondary"
           disabled={page === totalPages}
           onClick={() => onPageChange(page + 1)}
         >
-          Next
+          Next →
         </Button>
       </div>
     </div>

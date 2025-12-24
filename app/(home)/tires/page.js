@@ -10,8 +10,8 @@ export default function TireInventoryPage() {
   const { setHeader, setBreadcrumb } = useHeaderBreadcrumb();
 
   useEffect(() => {
-    setHeader('Tire Inventory');
-    setBreadcrumb(['Home', 'Tire Inventory']);
+    setHeader('Tires');
+    setBreadcrumb(['Home', 'Tires']);
     
     // Optional: Clean up when leaving page
     return () => {

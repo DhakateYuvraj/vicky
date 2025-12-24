@@ -98,8 +98,8 @@ const NavbarVertical = (props) => {
 		<Fragment>
 			<SimpleBar style={{ maxHeight: '100vh' }}>
 				<div className="nav-scroller">
-					<Link href="/" className="navbar-brand">
-						<Image src="/images/brand/logo/logo.svg" alt="" />
+					<Link href="/" className="navbar-brand text-center m-3 p-0">
+						<h2 className='text-white m-0'>Vicky</h2>
 					</Link>
 				</div>				
 				{/* Dashboard Menu */}
@@ -217,8 +217,8 @@ const NavbarVertical = (props) => {
 										{/* menu item without any childern items like Documentation and Changelog items*/}
 										<Link href={menu.link} className={`nav-link ${location === menu.link ? 'active' : ''} ${menu.title === 'Download' ? 'bg-primary text-white' : ''}`}>
 											{typeof menu.icon === 'string' ? (
-												<i className={`nav-icon fe fe-${menu.icon} me-2`}></i>
-											) : (menu.icon)}
+												<i className={`nav-icon fe fe-${menu.icon} mx-2`}></i>
+											) : <span className="mx-2">{menu.icon}</span>}
 											{menu.title} 
 											{menu.badge ? (
 												<Badge className="ms-1" bg={menu.badgecolor ? menu.badgecolor : 'primary'}>

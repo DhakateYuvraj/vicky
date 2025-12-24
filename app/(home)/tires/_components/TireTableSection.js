@@ -1,11 +1,10 @@
-// File: /app/vehicles/_components/VehicleTableSection.js
 'use client';
 
 import { useMemo, useState } from 'react';
-import DataTable, { StatusBadge } from 'components/DataTable';
-import TireTableFooter from '../../tires/_components/TireTableFooter'; // Reuse the same footer
+import DataTable, { StatusBadge, ProgressBar } from 'components/DataTable';
+import TireTableFooter from './TireTableFooter';
 
-export default function VehicleTableSection({
+export default function TireTableSection({
   data = [],
   selected = new Set(),
   onSelect,
@@ -65,37 +64,37 @@ export default function VehicleTableSection({
   };
 
   /* ---------- ACTIONS CONFIG ---------- */
-  const vehicleActions = [
+  const tireActions = [
     {
       label: 'View Details',
       icon: '👁️',
-      href: (vehicle) => `/vehicles/${vehicle.id}`
+      href: (tire) => `/tires/view/${tire.id?.split('-')[1] || tire.id}`
     },
     {
-      label: 'Edit Vehicle',
+      label: 'Edit Tire',
       icon: '✏️',
-      href: (vehicle) => `/vehicles/${vehicle.id}/edit`
+      href: (tire) => `/tires/edit/${tire.id?.split('-')[1] || tire.id}`
     },
     {
-      label: 'Manage Tyres',
+      label: 'Install on Vehicle',
       icon: '🔧',
-      href: (vehicle) => `/operations/install?vehicle=${vehicle.id}`
+      href: (tire) => `/operations/install?tire=${tire.id}`
     },
     {
       label: 'Schedule Inspection',
       icon: '🔍',
-      href: (vehicle) => `/inspections/schedule?vehicle=${vehicle.id}`
+      href: (tire) => `/inspections/schedule?tire=${tire.id}`
     },
     {
       type: 'divider'
     },
     {
-      label: 'Delete Vehicle',
+      label: 'Delete Tire',
       icon: '🗑️',
       className: 'text-danger',
-      onClick: (vehicle) => {
-        if (confirm(`Are you sure you want to delete vehicle ${vehicle.registrationNumber}?`)) {
-          console.log('Delete vehicle:', vehicle.id);
+      onClick: (tire) => {
+        if (confirm(`Are you sure you want to delete tire ${tire.id}?`)) {
+          console.log('Delete tire:', tire.id);
         }
       }
     }
@@ -104,52 +103,55 @@ export default function VehicleTableSection({
   /* ---------- COLUMNS CONFIG ---------- */
   const columns = [
     { 
-      key: 'registrationNumber', 
-      label: 'Registration #', 
+      key: 'id', 
+      label: 'Tire ID', 
       sortable: true,
       style: { minWidth: '120px' }
     },
     { 
-      key: 'make', 
-      label: 'Make', 
+      key: 'brand', 
+      label: 'Brand', 
       sortable: true,
-      style: { minWidth: '100px' }
+      style: { minWidth: '120px' }
     },
     { 
-      key: 'model', 
-      label: 'Model', 
+      key: 'size', 
+      label: 'Size', 
       sortable: true,
-      style: { minWidth: '100px' }
-    },
-    { 
-      key: 'vehicleType', 
-      label: 'Type', 
-      sortable: true,
-      style: { minWidth: '100px' }
+      style: { minWidth: '120px' }
     },
     { 
       key: 'status', 
       label: 'Status', 
       sortable: true,
-      style: { minWidth: '100px' },
+      style: { minWidth: '120px' },
       cellRenderer: (row, column) => (
         <StatusBadge status={row.status} />
       )
     },
     { 
-      key: 'odometer', 
-      label: 'Odometer', 
+      key: 'mileage', 
+      label: 'Mileage', 
       sortable: true,
       style: { minWidth: '120px' },
       cellRenderer: (row, column) => (
-        <span>{row.odometer?.toLocaleString()} km</span>
+        <span>{row.mileage?.toLocaleString()} km</span>
       )
     },
     { 
-      key: 'driver', 
-      label: 'Driver', 
+      key: 'treadDepth', 
+      label: 'Tread Depth', 
       sortable: true,
-      style: { minWidth: '120px' }
+      style: { minWidth: '150px' },
+      cellRenderer: (row, column) => (
+        <ProgressBar value={row.treadDepth} max={12} format="mm" />
+      )
+    },
+    { 
+      key: 'location', 
+      label: 'Location', 
+      sortable: true,
+      style: { minWidth: '150px' }
     }
   ];
 
@@ -165,7 +167,7 @@ export default function VehicleTableSection({
           onToggleAll={toggleAll}
           sortConfig={sortConfig}
           onSort={handleSort}
-          actions={vehicleActions}
+          actions={tireActions}
           showActions={true}
           rowKey="id"
         />
@@ -180,7 +182,6 @@ export default function VehicleTableSection({
           onPageChange={onPageChange}
           onRowsPerPageChange={onRowsPerPageChange}
           mode={mode}
-          entityName="vehicles" // Pass entity name
         />
       )}
     </div>

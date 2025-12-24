@@ -138,7 +138,7 @@ export default function TireSearchFilters({
             variant="outline-secondary"
             onClick={handleClear}
           >
-            Clear
+            Clear All
           </Button>
 
           <div className="d-flex gap-1">
