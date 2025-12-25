@@ -9,6 +9,8 @@ import {
     Dropdown,
     ListGroup,
 } from 'react-bootstrap';
+import { signOut, useSession } from "next-auth/react";
+import { getAuth, signOut as firebaseSignOut } from "firebase/auth";
 
 // simple bar scrolling used for notification item scrolling
 import SimpleBar from 'simplebar-react';
@@ -23,10 +25,30 @@ import useMounted from 'hooks/useMounted';
 const QuickMenu = () => {
 
     const hasMounted = useMounted();
+    const { data: session } = useSession();
     
     const isDesktop = useMediaQuery({
         query: '(min-width: 1224px)'
     })
+
+    const userName =
+  session?.user?.name ||
+  session?.user?.email ||
+  "User";
+
+    const handleLogout = async () => {
+  try {
+    const auth = getAuth();
+    await firebaseSignOut(auth); // Firebase logout
+  } catch (e) {
+    console.error("Firebase logout error", e);
+  }
+
+  await signOut({
+    redirect: true,
+    callbackUrl: "/login",
+  });
+};
 
     const Notifications = () => {
         return (
@@ -103,7 +125,7 @@ const QuickMenu = () => {
                     >
                     <Dropdown.Item as="div" className="px-4 pb-0 pt-2" bsPrefix=' '>
                             <div className="lh-1 ">
-                                <h5 className="mb-1"> John E. Grainger</h5>
+                                <h5 className="mb-1">{userName}</h5>
                                 <Link href="#" className="text-inherit fs-6">View my profile</Link>
                             </div>
                             <div className=" dropdown-divider mt-3 mb-2"></div>
@@ -120,7 +142,7 @@ const QuickMenu = () => {
                     <Dropdown.Item >
                         <i className="fe fe-settings me-2"></i> Account Settings
                     </Dropdown.Item>
-                    <Dropdown.Item>
+                    <Dropdown.Item onClick={handleLogout} role="button">
                         <i className="fe fe-power me-2"></i>Sign Out
                     </Dropdown.Item>
                 </Dropdown.Menu>
@@ -178,7 +200,7 @@ const QuickMenu = () => {
                     >
                     <Dropdown.Item as="div" className="px-4 pb-0 pt-2" bsPrefix=' '>
                             <div className="lh-1 ">
-                                <h5 className="mb-1"> John E. Grainger</h5>
+                                <h5 className="mb-1">{userName}</h5>
                                 <Link href="#" className="text-inherit fs-6">View my profile</Link>
                             </div>
                             <div className=" dropdown-divider mt-3 mb-2"></div>
@@ -195,7 +217,7 @@ const QuickMenu = () => {
                     <Dropdown.Item >
                         <i className="fe fe-settings me-2"></i> Account Settings
                     </Dropdown.Item>
-                    <Dropdown.Item>
+                   <Dropdown.Item onClick={handleLogout} role="button">
                         <i className="fe fe-power me-2"></i>Sign Out
                     </Dropdown.Item>
                 </Dropdown.Menu>

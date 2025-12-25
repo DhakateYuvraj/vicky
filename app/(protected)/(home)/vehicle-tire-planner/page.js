@@ -4,11 +4,14 @@ import { useState, useEffect } from "react";
 import { Container, Card, Dropdown, DropdownButton } from "react-bootstrap";
 import { useHeaderBreadcrumb } from "hooks/useHeaderBreadcrumb";
 import VehicleFlow from "./_components/VehicleFlow";
+import TireJobDrawer from "components/TireJobDrawer";
 
 export default function VehicleLayoutPage() {
   const { setHeader, setBreadcrumb } = useHeaderBreadcrumb();
 
   const [type, setType] = useState("CAR");
+  const [selectedTire, setSelectedTire] = useState(null);
+  const [nodes, setNodes] = useState([]);
 
   const vehicleTypes = [
     { id: "CAR", label: "Car" },
@@ -28,6 +31,30 @@ export default function VehicleLayoutPage() {
       setBreadcrumb([]);
     };
   }, [setHeader, setBreadcrumb]);
+
+
+  const handleTireClick = (tireNode) => {
+    setSelectedTire(tireNode);
+  };
+
+  const handleCloseDrawer = () => {
+    setSelectedTire(null);
+  };
+
+  const handleSwapTires = (id1, id2) => {
+    setNodes((prev) => {
+      const n1 = prev.find((n) => n.id === id1);
+      const n2 = prev.find((n) => n.id === id2);
+
+      if (!n1 || !n2) return prev;
+
+      return prev.map((n) => {
+        if (n.id === id1) return { ...n, position: n2.position };
+        if (n.id === id2) return { ...n, position: n1.position };
+        return n;
+      });
+    });
+  };
 
   return (
     <Container fluid className="py-3">
@@ -54,7 +81,20 @@ export default function VehicleLayoutPage() {
         </Card.Header>
 
         <Card.Body className="p-0" style={{ height: 400 }}>
-          <VehicleFlow type={type} />
+          <VehicleFlow
+            type={type}
+            nodes={nodes}
+            setNodes={setNodes}
+            onTireClick={handleTireClick}
+          />
+
+          <TireJobDrawer
+            show={!!selectedTire}
+            onClose={handleCloseDrawer}
+            tire={selectedTire}
+            availableTires={nodes.filter((n) => n.type === "tire")}
+            onSwap={handleSwapTires}
+          />
         </Card.Body>
 
         <Card.Footer className="text-muted py-2">

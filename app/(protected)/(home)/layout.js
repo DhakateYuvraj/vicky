@@ -1,4 +1,5 @@
 "use client";
+
 // import node module libraries
 import { useState } from "react";
 
@@ -14,14 +15,13 @@ import { HeaderBreadcrumbProvider } from "hooks/useHeaderBreadcrumb";
 
 export default function DashboardLayout({ children }) {
   const [showMenu, setShowMenu] = useState(true);
+
   const ToggleMenu = () => {
-    return setShowMenu(!showMenu);
+    setShowMenu(!showMenu);
   };
 
   return (
     <HeaderBreadcrumbProvider>
-      {" "}
-      {/* ← Wrap everything with provider */}
       <div id="db-wrapper" className={`${showMenu ? "" : "toggled"}`}>
         <div className="navbar-vertical navbar">
           <NavbarVertical
@@ -29,6 +29,7 @@ export default function DashboardLayout({ children }) {
             onClick={(value) => setShowMenu(value)}
           />
         </div>
+
         <div id="page-content">
           <div className="header">
             <NavbarTop
@@ -38,6 +39,7 @@ export default function DashboardLayout({ children }) {
               }}
             />
           </div>
+
           {children}
         </div>
       </div>

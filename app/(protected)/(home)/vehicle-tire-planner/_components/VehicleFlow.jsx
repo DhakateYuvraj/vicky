@@ -23,14 +23,20 @@ const nodeTypes = {
   body: BodyNode,
 };
 
-export default function VehicleFlow({ type }) {
+export default function VehicleFlow({ 
+    type,
+  nodes,
+  setNodes,
+  onTireClick
+
+ }) {
   const [isClient, setIsClient] = useState(false);
   
   useEffect(() => {
     setIsClient(true);
   }, []);
   
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
+  //const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
   useEffect(() => {
@@ -52,7 +58,15 @@ export default function VehicleFlow({ type }) {
         selectedLayout = carFixedLayout;
     }
 
-    setNodes(selectedLayout.nodes);
+    setNodes(
+      selectedLayout.nodes.map(n => ({
+        ...n,
+        data: {
+          ...n.data,
+          onClick: () => onTireClick(n)
+        }
+      }))
+    );
     setEdges([]);
   }, [type]);
 
@@ -66,6 +80,14 @@ export default function VehicleFlow({ type }) {
       nodes={nodes}
       edges={edges}
       nodeTypes={nodeTypes}
+
+      /* 🔑 THIS IS THE KEY FIX */
+      onNodeClick={(event, node) => {
+        if (node.type === 'tire') {
+          onTireClick(node);
+        }
+      }}
+
       nodesDraggable={false}
       nodesConnectable={false}
       elementsSelectable={false}

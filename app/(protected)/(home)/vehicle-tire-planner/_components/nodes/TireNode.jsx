@@ -1,5 +1,5 @@
 export default function TireNode({ data }) {
-  const { size = 'normal' } = data;
+  const { size = 'normal',onClick } = data;
   
   const dimensions = {
     normal: { width: 50, height: 25 },
@@ -8,7 +8,7 @@ export default function TireNode({ data }) {
 
   return (
     <div
-      onClick={() => alert(`Tire clicked: ${data.label} (${data.position})`)}
+      onClick={onClick}
       style={{
         width: dimensions.width,
         height: dimensions.height,
