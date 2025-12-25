@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react'; // Add useState
 import ReactFlow, {
   Background,
   Controls,
@@ -24,10 +24,15 @@ const nodeTypes = {
 };
 
 export default function VehicleFlow({ type }) {
+  const [isClient, setIsClient] = useState(false);
+  
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+  
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
-  // Reset layout on switch
   useEffect(() => {
     let selectedLayout;
     switch (type) {
@@ -49,19 +54,25 @@ export default function VehicleFlow({ type }) {
 
     setNodes(selectedLayout.nodes);
     setEdges([]);
-  }, [type]); // Only depend on type
+  }, [type]);
+
+  // Don't render ReactFlow during SSR
+  if (!isClient) {
+    return <div className="flex items-center justify-center h-full">Loading...</div>;
+  }
 
   return (
     <ReactFlow
       nodes={nodes}
       edges={edges}
       nodeTypes={nodeTypes}
-      nodesDraggable={true}
+      nodesDraggable={false}
       nodesConnectable={false}
-      elementsSelectable
+      elementsSelectable={false}
       zoomOnScroll={false}
-      panOnDrag={true}
+      panOnDrag={false}
       fitView
+      fitViewOptions={{ padding: 0.2 }}
     >
       <Background gap={24} />
       <Controls showInteractive={false} />

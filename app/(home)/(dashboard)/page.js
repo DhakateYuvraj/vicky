@@ -1,8 +1,17 @@
-import DashboardClient from "./DashboardClient";
+"use client";
 
+import dynamic from 'next/dynamic';
+
+const DashboardClient = dynamic(
+  () => import('./DashboardClient'),
+  { ssr: false }
+);
+
+/*
 export const metadata = {
   title: "Dashboard | Tire ERP"
 };
+*/
 
 async function getDashboardData() {
   // Later replace with real API / DB
